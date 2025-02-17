@@ -25,8 +25,11 @@ public class BaseTest {
             .build();
     }
 
-    public static void installSpecification(RequestSpecification reqSpec, ResponseSpecification respSpec) {
+    public static void installRequestSpecification(RequestSpecification reqSpec) {
         RestAssured.requestSpecification = reqSpec;
+    }
+
+    public static void installResponseSpecification(ResponseSpecification respSpec) {
         RestAssured.responseSpecification = respSpec;
     }
 
