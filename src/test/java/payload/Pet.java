@@ -8,7 +8,7 @@ public class Pet {
     private String name;
     private List<String> photoUrls;
     private List<PetTag> tags;
-    private PetStatus status;
+    private String status;
 
     public int getId() {
         return id;
@@ -22,8 +22,8 @@ public class Pet {
         return category;
     }
 
-    public void setCategory(PetCategory category) {
-        this.category = category;
+    public void setCategory(int categoryId, String categoryName) {
+        this.category = new PetCategory(categoryId, categoryName);
     }
 
     public String getName() {
@@ -50,11 +50,11 @@ public class Pet {
         this.tags = tags;
     }
 
-    public PetStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(PetStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }
