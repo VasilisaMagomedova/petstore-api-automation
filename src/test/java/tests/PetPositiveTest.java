@@ -4,15 +4,15 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.response.Response;
+import org.json.JSONObject;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import payload.Pet;
 import utils.TestValues;
-
-import static endpoints.Endpoints.PET_GET_BY_ID_URL;
-import static endpoints.Endpoints.PET_POST_URL;
+import static endpoints.Endpoints.*;
 import static io.restassured.RestAssured.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static utils.TestValues.*;
 
 public class PetPositiveTest extends BaseTest {
 
@@ -51,14 +51,14 @@ public class PetPositiveTest extends BaseTest {
             .body(setupPetData())
 
         .when()
-            .post(PET_POST_URL)
+            .post(PET_CREATE_POST_URL)
 
         .then()
             .extract().response();
 
     }
 
-    @Step("Отправить GET /pet/petId с petId созданного питомца на предыдущем шаге")
+    @Step("Запросить данные питомца через GET /pet/petID")
     public static Response getPetByIdStep(int petId) {
         installResponseSpecification(ResponseSpecification200());
 
@@ -79,6 +79,46 @@ public class PetPositiveTest extends BaseTest {
 
         assertThat(postPetResponse.jsonPath().getString("name"))
                 .isEqualTo(getPetResponse.jsonPath().getString("name"));
+    }
+
+
+    @Test(description = "Обновление питомца")
+    @Description("Проверка обновления данных питомца")
+    public void updatePetTest() {
+        Response postPetResponse = addPetStep();
+        int createdPetId = postPetResponse.jsonPath().getInt("id");
+        editPetStep(createdPetId);
+        Response getUpdatedPetResponse = getPetByIdStep(createdPetId);
+        checkUpdatedPetDataStep(getUpdatedPetResponse);
+
+    }
+
+    @Step("Изменить данные питомца через PUT /pet")
+    public static void editPetStep(int createdPetId) {
+
+        JSONObject petDataUpdated = new JSONObject();
+        petDataUpdated.put("id", createdPetId);
+        petDataUpdated.put("name", testPetNameUpdated);
+        petDataUpdated.put("photoUrls", testPetPhotoUrlsUpdated);
+        petDataUpdated.put("status", testPetStatusUpdated);
+
+        installRequestSpecification(RequestSpecification());
+        installResponseSpecification(ResponseSpecification200());
+
+        given()
+            .filter(new AllureRestAssured())
+            .body(petDataUpdated.toString())
+
+        .when()
+            .put(PET_UPDATE_PUT_URL);
+
+    }
+
+    @Step("Проверить изменение данных питомца")
+    public static void checkUpdatedPetDataStep(Response getUpdatedPetResponse) {
+        assertThat(getUpdatedPetResponse.jsonPath().getString("name")).isEqualTo(testPetNameUpdated);
+        assertThat(getUpdatedPetResponse.jsonPath().getList("photoUrls")).isEqualTo(testPetPhotoUrlsUpdated);
+        assertThat(getUpdatedPetResponse.jsonPath().getString("status")).isEqualTo(testPetStatusUpdated);
     }
 
 }

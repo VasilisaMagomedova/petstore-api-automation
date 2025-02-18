@@ -36,4 +36,9 @@ public class TestValues {
 
     // берем вариант из enum PetStatus
     public static String testPetStatus = PetStatus.AVAILABLE.getStatus();
+
+    // для изменения данных питомца
+    public static String testPetNameUpdated = "Mr Cat";
+    public static List<String> testPetPhotoUrlsUpdated = Arrays.asList("photo", "photo2", "photo3");
+    public static String testPetStatusUpdated = PetStatus.SOLD.getStatus();
 }

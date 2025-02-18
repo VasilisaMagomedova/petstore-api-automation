@@ -5,7 +5,16 @@
         <classes>
             <class name="tests.PetPositiveTest">
                 <methods>
-                    <include name="createPet"/>
+                    <include name="createPetTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Обновление питомца">
+        <classes>
+            <class name="tests.PetPositiveTest">
+                <methods>
+                    <include name="updatePetTest"/>
                 </methods>
             </class>
         </classes>
