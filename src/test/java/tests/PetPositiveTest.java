@@ -54,6 +54,7 @@ public class PetPositiveTest extends BaseTest {
     public Response getPetByIdStep(int petId) {
 
         return given()
+            .filter(new AllureRestAssured())
             .pathParam("petId", petId)
 
         .when()
@@ -126,6 +127,7 @@ public class PetPositiveTest extends BaseTest {
     public void deletePetByIdStep(int petId) {
 
         given()
+            .filter(new AllureRestAssured())
             .pathParam("petId", petId)
 
         .when()
@@ -140,6 +142,7 @@ public class PetPositiveTest extends BaseTest {
     public void getPetByIdAndStatus404Step(int petId) {
 
         given()
+            .filter(new AllureRestAssured())
             .pathParam("petId", petId)
 
         .when()
@@ -162,6 +165,7 @@ public class PetPositiveTest extends BaseTest {
     public String getPetsByStatusAvailableStep() {
 
         return given()
+            .filter(new AllureRestAssured())
             .queryParam("status", "available")
 
         .when()

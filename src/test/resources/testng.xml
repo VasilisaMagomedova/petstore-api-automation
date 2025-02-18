@@ -37,4 +37,23 @@
             </class>
         </classes>
     </test>
+
+    <test name="Создание питомца без данных">
+        <classes>
+            <class name="tests.PetNegativeTest">
+                <methods>
+                    <include name="createPetWithoutDataTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Поиск питомца без id">
+        <classes>
+            <class name="tests.PetNegativeTest">
+                <methods>
+                    <include name="searchPetWithoutIdTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
 </suite>

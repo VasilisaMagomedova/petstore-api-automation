@@ -41,4 +41,5 @@ public class TestValues {
     public static String testPetNameUpdated = "Mr Cat";
     public static List<String> testPetPhotoUrlsUpdated = Arrays.asList("photo", "photo2", "photo3");
     public static String testPetStatusUpdated = PetStatus.SOLD.getStatus();
+
 }
