@@ -10,27 +10,20 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 
 public class BaseTest {
 
-    public static RequestSpecification RequestSpecification() {
-        return new RequestSpecBuilder()
+    RequestSpecification requestSpecification = new RequestSpecBuilder()
             .setBaseUri(Endpoints.PETSTORE_BASE_URL)
             .setContentType("application/json")
             .setAccept("application/json")
             .build();
-    }
 
-    public static ResponseSpecification ResponseSpecification200() {
-        return new ResponseSpecBuilder()
+    ResponseSpecification responseSpecification200 = new ResponseSpecBuilder()
             .expectStatusCode(200)
             .expectBody(matchesJsonSchemaInClasspath("petSchema.json"))
             .build();
-    }
 
-    public static void installRequestSpecification(RequestSpecification reqSpec) {
-        RestAssured.requestSpecification = reqSpec;
-    }
-
-    public static void installResponseSpecification(ResponseSpecification respSpec) {
-        RestAssured.responseSpecification = respSpec;
-    }
+    ResponseSpecification responseSpecification404 = new ResponseSpecBuilder()
+                .expectStatusCode(404)
+                .expectBody(matchesJsonSchemaInClasspath("petSchema404.json"))
+                .build();
 
 }

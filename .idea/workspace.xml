@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c17ece11-5bc1-4469-82a5-055cb9716e69" name="Changes" comment="Edited createPetTest, test values, edited POJO Pet class">
+      <change afterPath="$PROJECT_DIR$/src/test/resources/petSchema404.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/endpoints/Endpoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/endpoints/Endpoints.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/tests/BaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/BaseTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/tests/PetPositiveTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/PetPositiveTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/utils/TestValues.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utils/TestValues.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +45,8 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "TestNG.PetPositiveTest.createPet.executor": "Run",
+    "TestNG.PetPositiveTest.createPetTest.executor": "Run",
+    "TestNG.PetPositiveTest.deletePetTest.executor": "Run",
     "TestNG.PetPositiveTest.updatePetTest.executor": "Run",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true"
@@ -56,7 +57,24 @@
       <recent name="C:\Users\vasya\OneDrive\Рабочий стол\QA\AQA\petstore-api-automation\src\test\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="TestNG.PetPositiveTest.updatePetTest">
+  <component name="RunManager" selected="TestNG.PetPositiveTest">
+    <configuration name="PetPositiveTest" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="petstore-api-automation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tests" />
+      <option name="MAIN_CLASS_NAME" value="tests.PetPositiveTest" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="PetPositiveTest.createPetTest" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="petstore-api-automation" />
       <extension name="coverage">
@@ -68,6 +86,24 @@
       <option name="PACKAGE_NAME" value="tests" />
       <option name="MAIN_CLASS_NAME" value="tests.PetPositiveTest" />
       <option name="METHOD_NAME" value="createPetTest" />
+      <option name="TEST_OBJECT" value="METHOD" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PetPositiveTest.deletePetTest" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="petstore-api-automation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tests" />
+      <option name="MAIN_CLASS_NAME" value="tests.PetPositiveTest" />
+      <option name="METHOD_NAME" value="deletePetTest" />
       <option name="TEST_OBJECT" value="METHOD" />
       <properties />
       <listeners />
@@ -95,8 +131,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="TestNG.PetPositiveTest.updatePetTest" />
+        <item itemvalue="TestNG.PetPositiveTest" />
         <item itemvalue="TestNG.PetPositiveTest.createPetTest" />
+        <item itemvalue="TestNG.PetPositiveTest.deletePetTest" />
+        <item itemvalue="TestNG.PetPositiveTest.updatePetTest" />
       </list>
     </recent_temporary>
   </component>

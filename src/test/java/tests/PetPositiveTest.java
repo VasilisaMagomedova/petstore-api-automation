@@ -5,7 +5,6 @@ import io.qameta.allure.Step;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.response.Response;
 import org.json.JSONObject;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import payload.Pet;
 import utils.TestValues;
@@ -15,21 +14,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static utils.TestValues.*;
 
 public class PetPositiveTest extends BaseTest {
-
-    @BeforeTest
-    public static Pet setupPetData() {
-        Pet pet = new Pet();
-
-        pet.setId(TestValues.testPetId);
-        pet.setCategory(TestValues.testPetCategoryId, TestValues.testPetCategoryName);
-        pet.setName(TestValues.testPetName);
-        pet.setPhotoUrls(TestValues.testPetPhotoUrls);
-        pet.setTags(TestValues.getPetTestTags());
-        pet.setStatus(TestValues.testPetStatus);
-
-        return pet;
-
-    }
 
     @Test(description = "Создание питомца")
     @Description("Проверка успешного создания нового питомца")
@@ -41,26 +25,32 @@ public class PetPositiveTest extends BaseTest {
     }
 
     @Step("Отправить POST /pet с валидными данными")
-    public static Response addPetStep() {
+    public Response addPetStep() {
 
-        installRequestSpecification(RequestSpecification());
-        installResponseSpecification(ResponseSpecification200());
+        Pet newPet = new Pet();
+        newPet.setId(TestValues.testPetId);
+        newPet.setCategory(TestValues.testPetCategoryId, TestValues.testPetCategoryName);
+        newPet.setName(TestValues.testPetName);
+        newPet.setPhotoUrls(TestValues.testPetPhotoUrls);
+        newPet.setTags(TestValues.getPetTestTags());
+        newPet.setStatus(TestValues.testPetStatus);
 
         return given()
             .filter(new AllureRestAssured())
-            .body(setupPetData())
+            .spec(requestSpecification)
+            .body(newPet)
 
         .when()
             .post(PET_CREATE_POST_URL)
 
         .then()
+            .spec(responseSpecification200)
             .extract().response();
 
     }
 
     @Step("Запросить данные питомца через GET /pet/petID")
-    public static Response getPetByIdStep(int petId) {
-        installResponseSpecification(ResponseSpecification200());
+    public Response getPetByIdStep(int petId) {
 
         return given()
             .pathParam("petId", petId)
@@ -69,11 +59,12 @@ public class PetPositiveTest extends BaseTest {
             .get(PET_GET_BY_ID_URL)
 
         .then()
+            .spec(responseSpecification200)
             .extract().response();
     }
 
     @Step("Проверить совпадение данных питомца (id, name)")
-    public static void verifyPetDataStep(Response postPetResponse, Response getPetResponse) {
+    public void verifyPetDataStep(Response postPetResponse, Response getPetResponse) {
         assertThat(postPetResponse.jsonPath().getInt("id"))
                 .isEqualTo(getPetResponse.jsonPath().getInt("id"));
 
@@ -90,11 +81,10 @@ public class PetPositiveTest extends BaseTest {
         editPetStep(createdPetId);
         Response getUpdatedPetResponse = getPetByIdStep(createdPetId);
         checkUpdatedPetDataStep(getUpdatedPetResponse);
-
     }
 
     @Step("Изменить данные питомца через PUT /pet")
-    public static void editPetStep(int createdPetId) {
+    public void editPetStep(int createdPetId) {
 
         JSONObject petDataUpdated = new JSONObject();
         petDataUpdated.put("id", createdPetId);
@@ -102,23 +92,61 @@ public class PetPositiveTest extends BaseTest {
         petDataUpdated.put("photoUrls", testPetPhotoUrlsUpdated);
         petDataUpdated.put("status", testPetStatusUpdated);
 
-        installRequestSpecification(RequestSpecification());
-        installResponseSpecification(ResponseSpecification200());
-
         given()
             .filter(new AllureRestAssured())
+            .spec(requestSpecification)
             .body(petDataUpdated.toString())
 
         .when()
-            .put(PET_UPDATE_PUT_URL);
+            .put(PET_UPDATE_PUT_URL)
+
+        .then()
+            .spec(responseSpecification200);
 
     }
 
     @Step("Проверить изменение данных питомца")
-    public static void checkUpdatedPetDataStep(Response getUpdatedPetResponse) {
+    public void checkUpdatedPetDataStep(Response getUpdatedPetResponse) {
         assertThat(getUpdatedPetResponse.jsonPath().getString("name")).isEqualTo(testPetNameUpdated);
         assertThat(getUpdatedPetResponse.jsonPath().getList("photoUrls")).isEqualTo(testPetPhotoUrlsUpdated);
         assertThat(getUpdatedPetResponse.jsonPath().getString("status")).isEqualTo(testPetStatusUpdated);
+    }
+
+    @Test(description = "Удаление питомца")
+    @Description("Проверка удаления питомца")
+    public void deletePetTest() {
+        Response postPetResponse = addPetStep();
+        int createdPetId = postPetResponse.jsonPath().getInt("id");
+        deletePetByIdStep(createdPetId);
+        getPetByIdAndStatus404Step(createdPetId);
+    }
+
+    @Step("Удалить питомца через DELETE /pet/petID")
+    public void deletePetByIdStep(int petId) {
+
+        given()
+            .pathParam("petId", petId)
+
+        .when()
+            .delete(PET_DELETE_URL)
+
+        .then()
+            .statusCode(200);
+
+    }
+
+    @Step("Проверить статус-код 404 при запросе данных питомца через GET /pet/petID")
+    public void getPetByIdAndStatus404Step(int petId) {
+
+        given()
+            .pathParam("petId", petId)
+
+        .when()
+            .get(PET_GET_BY_ID_URL)
+
+        .then()
+            .spec(responseSpecification404);
+
     }
 
 }
