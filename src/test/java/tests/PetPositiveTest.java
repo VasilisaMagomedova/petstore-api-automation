@@ -4,6 +4,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.response.Response;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 import payload.Pet;
@@ -146,6 +147,41 @@ public class PetPositiveTest extends BaseTest {
 
         .then()
             .spec(responseSpecification404);
+
+    }
+
+
+    @Test(description = "Получение списка доступных питомцев")
+    @Description("Проверка фильтрации списка питомцев по статусу available")
+    public void getPetsByStatusAvailableTest() {
+        String getPetsByStatusResponse = getPetsByStatusAvailableStep();
+        verifyStatusAvailableFromPetsDataStep(getPetsByStatusResponse);
+    }
+
+    @Step("Запросить список доступных питомцев через GET /pet/findByStatus?status=available")
+    public String getPetsByStatusAvailableStep() {
+
+        return given()
+            .queryParam("status", "available")
+
+        .when()
+            .get(PET_GET_BY_STATUS_URL)
+
+        .then()
+            .spec(responseSpecificationForPetsList200)
+            .extract().asString();
+
+    }
+
+    @Step("Проверить в ответе наличие питомцев только со статусом available")
+    public void verifyStatusAvailableFromPetsDataStep(String getPetsByStatusResponse) {
+
+        JSONArray petsResponseJSONArray = new JSONArray(getPetsByStatusResponse);
+
+        for(int i = 0; i < petsResponseJSONArray.length(); i++) {
+            String petStatus = petsResponseJSONArray.getJSONObject(i).get("status").toString();
+            assertThat(petStatus).isEqualTo("available");
+        }
 
     }
 

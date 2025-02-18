@@ -21,6 +21,11 @@ public class BaseTest {
             .expectBody(matchesJsonSchemaInClasspath("petSchema.json"))
             .build();
 
+    ResponseSpecification responseSpecificationForPetsList200 = new ResponseSpecBuilder()
+            .expectStatusCode(200)
+            .expectBody(matchesJsonSchemaInClasspath("petsListSchema.json"))
+            .build();
+
     ResponseSpecification responseSpecification404 = new ResponseSpecBuilder()
                 .expectStatusCode(404)
                 .expectBody(matchesJsonSchemaInClasspath("petSchema404.json"))
