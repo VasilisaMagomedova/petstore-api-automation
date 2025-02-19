@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import io.qameta.allure.Description;
 import io.qameta.allure.restassured.AllureRestAssured;
 import org.testng.annotations.Test;
+import utils.RetryAnalyzer;
+
 import static endpoints.Endpoints.*;
 import static io.restassured.RestAssured.given;
 import static utils.TestValues.*;
@@ -14,7 +16,7 @@ public class PetNegativeTest extends BaseTest {
 
     private static final Logger logger = LoggerFactory.getLogger(PetNegativeTest.class);
 
-    @Test(description = "Создание питомца без данных", timeOut = 10000)
+    @Test(description = "Создание питомца без данных", timeOut = 10000, retryAnalyzer = RetryAnalyzer.class)
     @Description("Проверка валидации отсутствия body запроса у POST /pet")
     public void createPetWithoutDataTest() {
 
@@ -40,7 +42,7 @@ public class PetNegativeTest extends BaseTest {
 
     }
 
-    @Test(description = "Поиск питомца без id", timeOut = 10000)
+    @Test(description = "Поиск питомца без id", timeOut = 10000, retryAnalyzer = RetryAnalyzer.class)
     @Description("Проверка валидации отсутствия id в GET /pet/petId")
     public void searchPetWithoutIdTest() {
 
@@ -65,7 +67,7 @@ public class PetNegativeTest extends BaseTest {
 
     }
 
-    @Test(description = "Удаление несуществующего питомца", timeOut = 10000)
+    @Test(description = "Удаление несуществующего питомца", timeOut = 10000, retryAnalyzer = RetryAnalyzer.class)
     @Description("Проверка невозможности удаления питомца в DELETE /pet/petId при отправке несуществующего petId")
     public void deleteAbsentPetTest() {
 

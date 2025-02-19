@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 import payload.Pet;
+import utils.RetryAnalyzer;
 import utils.TestValues;
 import static endpoints.Endpoints.*;
 import static io.restassured.RestAssured.*;
@@ -20,7 +21,7 @@ public class PetPositiveTest extends BaseTest {
 
     private static final Logger logger = LoggerFactory.getLogger(PetPositiveTest.class);
 
-    @Test(description = "Создание питомца", timeOut = 10000)
+    @Test(description = "Создание питомца", timeOut = 10000, retryAnalyzer = RetryAnalyzer.class)
     @Description("Проверка успешного создания нового питомца")
     public void createPetTest() {
 
@@ -112,7 +113,7 @@ public class PetPositiveTest extends BaseTest {
     }
 
 
-    @Test(description = "Обновление питомца", timeOut = 10000)
+    @Test(description = "Обновление питомца", timeOut = 10000, retryAnalyzer = RetryAnalyzer.class)
     @Description("Проверка обновления данных питомца")
     public void updatePetTest() {
 
@@ -175,7 +176,7 @@ public class PetPositiveTest extends BaseTest {
 
     }
 
-    @Test(description = "Удаление питомца", timeOut = 10000)
+    @Test(description = "Удаление питомца", timeOut = 10000, retryAnalyzer = RetryAnalyzer.class)
     @Description("Проверка удаления питомца")
     public void deletePetTest() {
 
@@ -232,7 +233,7 @@ public class PetPositiveTest extends BaseTest {
     }
 
 
-    @Test(description = "Получение списка доступных питомцев", timeOut = 10000)
+    @Test(description = "Получение списка доступных питомцев", timeOut = 10000, retryAnalyzer = RetryAnalyzer.class)
     @Description("Проверка фильтрации списка питомцев по статусу available")
     public void getPetsByStatusAvailableTest() {
 
