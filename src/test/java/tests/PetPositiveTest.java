@@ -16,7 +16,7 @@ import static utils.TestValues.*;
 
 public class PetPositiveTest extends BaseTest {
 
-    @Test(description = "Создание питомца")
+    @Test(description = "Создание питомца", timeOut = 10000)
     @Description("Проверка успешного создания нового питомца")
     public void createPetTest() {
         Response postPetResponse = addPetStep();
@@ -75,7 +75,7 @@ public class PetPositiveTest extends BaseTest {
     }
 
 
-    @Test(description = "Обновление питомца")
+    @Test(description = "Обновление питомца", timeOut = 10000)
     @Description("Проверка обновления данных питомца")
     public void updatePetTest() {
         Response postPetResponse = addPetStep();
@@ -114,7 +114,7 @@ public class PetPositiveTest extends BaseTest {
         assertThat(getUpdatedPetResponse.jsonPath().getString("status")).isEqualTo(testPetStatusUpdated);
     }
 
-    @Test(description = "Удаление питомца")
+    @Test(description = "Удаление питомца", timeOut = 10000)
     @Description("Проверка удаления питомца")
     public void deletePetTest() {
         Response postPetResponse = addPetStep();
@@ -154,7 +154,7 @@ public class PetPositiveTest extends BaseTest {
     }
 
 
-    @Test(description = "Получение списка доступных питомцев")
+    @Test(description = "Получение списка доступных питомцев", timeOut = 10000)
     @Description("Проверка фильтрации списка питомцев по статусу available")
     public void getPetsByStatusAvailableTest() {
         String getPetsByStatusResponse = getPetsByStatusAvailableStep();

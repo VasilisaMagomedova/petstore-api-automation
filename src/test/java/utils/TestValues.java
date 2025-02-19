@@ -42,4 +42,7 @@ public class TestValues {
     public static List<String> testPetPhotoUrlsUpdated = Arrays.asList("photo", "photo2", "photo3");
     public static String testPetStatusUpdated = PetStatus.SOLD.getStatus();
 
+    // несуществующий id питомца
+    public static int testPetIdAbsent = -8;
+
 }

@@ -1,59 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="API-tests PetStore">
-    <test name="Создание питомца">
+
+    <test name="Позитивные сценарии">
         <classes>
-            <class name="tests.PetPositiveTest">
-                <methods>
-                    <include name="createPetTest"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="Обновление питомца">
-        <classes>
-            <class name="tests.PetPositiveTest">
-                <methods>
-                    <include name="updatePetTest"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="Удаление питомца">
-        <classes>
-            <class name="tests.PetPositiveTest">
-                <methods>
-                    <include name="deletePetTest"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="Получение списка доступных питомцев">
-        <classes>
-            <class name="tests.PetPositiveTest">
-                <methods>
-                    <include name="getPetsByStatusAvailableTest"/>
-                </methods>
-            </class>
+            <class name="tests.PetPositiveTest"/>
         </classes>
     </test>
 
-    <test name="Создание питомца без данных">
+    <test name="Негативные сценарии">
         <classes>
-            <class name="tests.PetNegativeTest">
-                <methods>
-                    <include name="createPetWithoutDataTest"/>
-                </methods>
-            </class>
+            <class name="tests.PetNegativeTest"/>
         </classes>
     </test>
-    <test name="Поиск питомца без id">
-        <classes>
-            <class name="tests.PetNegativeTest">
-                <methods>
-                    <include name="searchPetWithoutIdTest"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
+
 </suite>
