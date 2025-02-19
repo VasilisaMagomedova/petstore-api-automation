@@ -6,6 +6,8 @@ import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.response.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 import payload.Pet;
 import utils.TestValues;
@@ -16,17 +18,27 @@ import static utils.TestValues.*;
 
 public class PetPositiveTest extends BaseTest {
 
+    private static final Logger logger = LoggerFactory.getLogger(PetPositiveTest.class);
+
     @Test(description = "Создание питомца", timeOut = 10000)
     @Description("Проверка успешного создания нового питомца")
     public void createPetTest() {
+
+        logger.info("Тест 'Создание питомца' запущен");
+
         Response postPetResponse = addPetStep();
         int createdPetId = postPetResponse.jsonPath().getInt("id");
         Response getPetResponse = getPetByIdStep(createdPetId);
         verifyPetDataStep(postPetResponse, getPetResponse);
+
+        logger.info("Тест 'Создание питомца' завершен");
+
     }
 
     @Step("Отправить POST /pet с валидными данными")
     public Response addPetStep() {
+
+        logger.info("Шаг теста 'Отправить POST /pet с валидными данными' запущен");
 
         Pet newPet = new Pet();
         newPet.setId(TestValues.testPetId);
@@ -36,57 +48,90 @@ public class PetPositiveTest extends BaseTest {
         newPet.setTags(TestValues.getPetTestTags());
         newPet.setStatus(TestValues.testPetStatus);
 
-        return given()
-            .filter(new AllureRestAssured())
-            .spec(requestSpecification)
-            .body(newPet)
+        try {
+            return given()
+                .filter(new AllureRestAssured())
+                .spec(requestSpecification)
+                .body(newPet)
 
-        .when()
-            .post(PET_CREATE_POST_URL)
+            .when()
+                .post(PET_CREATE_POST_URL)
 
-        .then()
-            .spec(responseSpecification200)
-            .extract().response();
+            .then()
+                .spec(responseSpecification200)
+                .extract().response();
+
+        } catch (Exception e) {
+            logger.error("Ошибка при обработке запроса POST /pet: ", e);
+            throw e;
+        }
 
     }
 
     @Step("Запросить данные питомца через GET /pet/petID")
     public Response getPetByIdStep(int petId) {
 
-        return given()
-            .filter(new AllureRestAssured())
-            .pathParam("petId", petId)
+        logger.info("Шаг теста 'Запросить данные питомца через GET /pet/petID' запущен");
 
-        .when()
-            .get(PET_GET_BY_ID_URL)
+        try {
+            return given()
+                .filter(new AllureRestAssured())
+                .pathParam("petId", petId)
 
-        .then()
-            .spec(responseSpecification200)
-            .extract().response();
+            .when()
+                .get(PET_GET_BY_ID_URL)
+
+            .then()
+                .spec(responseSpecification200)
+                .extract().response();
+
+        } catch (Exception e) {
+            logger.error("Ошибка при обработке запроса GET /pet/petID: {}", petId, e);
+            throw e;
+        }
+
     }
 
     @Step("Проверить совпадение данных питомца (id, name)")
     public void verifyPetDataStep(Response postPetResponse, Response getPetResponse) {
-        assertThat(postPetResponse.jsonPath().getInt("id"))
-                .isEqualTo(getPetResponse.jsonPath().getInt("id"));
 
-        assertThat(postPetResponse.jsonPath().getString("name"))
-                .isEqualTo(getPetResponse.jsonPath().getString("name"));
+        logger.info("Шаг теста 'Проверить совпадение данных питомца (id, name)' запущен");
+
+        try {
+            assertThat(postPetResponse.jsonPath().getInt("id"))
+                    .isEqualTo(getPetResponse.jsonPath().getInt("id"));
+
+            assertThat(postPetResponse.jsonPath().getString("name"))
+                    .isEqualTo(getPetResponse.jsonPath().getString("name"));
+
+        } catch (AssertionError e) {
+            logger.error("Ошибка валидации данных питомца: {}", e.getMessage(), e);
+            throw e;
+        }
+
     }
 
 
     @Test(description = "Обновление питомца", timeOut = 10000)
     @Description("Проверка обновления данных питомца")
     public void updatePetTest() {
+
+        logger.info("Тест 'Обновление питомца' запущен");
+
         Response postPetResponse = addPetStep();
         int createdPetId = postPetResponse.jsonPath().getInt("id");
         editPetStep(createdPetId);
         Response getUpdatedPetResponse = getPetByIdStep(createdPetId);
         checkUpdatedPetDataStep(getUpdatedPetResponse);
+
+        logger.info("Тест 'Обновление питомца' завершен");
+
     }
 
     @Step("Изменить данные питомца через PUT /pet")
     public void editPetStep(int createdPetId) {
+
+        logger.info("Шаг теста 'Изменить данные питомца через PUT /pet' запущен");
 
         JSONObject petDataUpdated = new JSONObject();
         petDataUpdated.put("id", createdPetId);
@@ -94,37 +139,61 @@ public class PetPositiveTest extends BaseTest {
         petDataUpdated.put("photoUrls", testPetPhotoUrlsUpdated);
         petDataUpdated.put("status", testPetStatusUpdated);
 
-        given()
-            .filter(new AllureRestAssured())
-            .spec(requestSpecification)
-            .body(petDataUpdated.toString())
+        try {
+            given()
+                .filter(new AllureRestAssured())
+                .spec(requestSpecification)
+                .body(petDataUpdated.toString())
 
-        .when()
-            .put(PET_UPDATE_PUT_URL)
+            .when()
+                .put(PET_UPDATE_PUT_URL)
 
-        .then()
-            .spec(responseSpecification200);
+            .then()
+                .spec(responseSpecification200);
+
+        } catch (Exception e) {
+        logger.error("Ошибка при обработке запроса PUT /pet: ", e);
+        throw e;
+        }
 
     }
 
     @Step("Проверить изменение данных питомца")
     public void checkUpdatedPetDataStep(Response getUpdatedPetResponse) {
-        assertThat(getUpdatedPetResponse.jsonPath().getString("name")).isEqualTo(testPetNameUpdated);
-        assertThat(getUpdatedPetResponse.jsonPath().getList("photoUrls")).isEqualTo(testPetPhotoUrlsUpdated);
-        assertThat(getUpdatedPetResponse.jsonPath().getString("status")).isEqualTo(testPetStatusUpdated);
+
+        logger.info("Шаг теста 'Проверить изменение данных питомца' запущен");
+
+        try {
+            assertThat(getUpdatedPetResponse.jsonPath().getString("name")).isEqualTo(testPetNameUpdated);
+            assertThat(getUpdatedPetResponse.jsonPath().getList("photoUrls")).isEqualTo(testPetPhotoUrlsUpdated);
+            assertThat(getUpdatedPetResponse.jsonPath().getString("status")).isEqualTo(testPetStatusUpdated);
+
+        } catch (AssertionError e) {
+            logger.error("Ошибка валидации данных питомца: {}", e.getMessage(), e);
+            throw e;
+        }
+
     }
 
     @Test(description = "Удаление питомца", timeOut = 10000)
     @Description("Проверка удаления питомца")
     public void deletePetTest() {
+
+        logger.info("Тест 'Удаление питомца' запущен");
+
         Response postPetResponse = addPetStep();
         int createdPetId = postPetResponse.jsonPath().getInt("id");
         deletePetByIdStep(createdPetId);
         getPetByIdAndStatus404Step(createdPetId);
+
+        logger.info("Тест 'Удаление питомца' завершен");
+
     }
 
     @Step("Удалить питомца через DELETE /pet/petID")
     public void deletePetByIdStep(int petId) {
+
+        logger.info("Шаг теста 'Удалить питомца через DELETE /pet/petID' запущен");
 
         given()
             .filter(new AllureRestAssured())
@@ -134,6 +203,7 @@ public class PetPositiveTest extends BaseTest {
             .delete(PET_DELETE_URL)
 
         .then()
+            .log().ifValidationFails()
             .statusCode(200);
 
     }
@@ -141,15 +211,23 @@ public class PetPositiveTest extends BaseTest {
     @Step("Проверить статус-код 404 при запросе данных питомца через GET /pet/petID")
     public void getPetByIdAndStatus404Step(int petId) {
 
-        given()
-            .filter(new AllureRestAssured())
-            .pathParam("petId", petId)
+        logger.info("Шаг теста 'Проверить статус-код 404 при запросе данных питомца через GET /pet/petID' запущен");
 
-        .when()
-            .get(PET_GET_BY_ID_URL)
+        try {
+            given()
+                .filter(new AllureRestAssured())
+                .pathParam("petId", petId)
 
-        .then()
-            .spec(responseSpecification404);
+            .when()
+                .get(PET_GET_BY_ID_URL)
+
+            .then()
+                .spec(responseSpecification404);
+
+        } catch (Exception e) {
+            logger.error("Ошибка при обработке запроса GET /pet/petID: ", e);
+            throw e;
+        }
 
     }
 
@@ -157,34 +235,56 @@ public class PetPositiveTest extends BaseTest {
     @Test(description = "Получение списка доступных питомцев", timeOut = 10000)
     @Description("Проверка фильтрации списка питомцев по статусу available")
     public void getPetsByStatusAvailableTest() {
+
+        logger.info("Тест 'Получение списка доступных питомцев' запущен");
+
         String getPetsByStatusResponse = getPetsByStatusAvailableStep();
         verifyStatusAvailableFromPetsDataStep(getPetsByStatusResponse);
+
+        logger.info("Тест 'Получение списка доступных питомцев' завершен");
+
     }
 
     @Step("Запросить список доступных питомцев через GET /pet/findByStatus?status=available")
     public String getPetsByStatusAvailableStep() {
 
-        return given()
-            .filter(new AllureRestAssured())
-            .queryParam("status", "available")
+        logger.info("Шаг теста 'Запросить список доступных питомцев через GET /pet/findByStatus?status=available' запущен");
 
-        .when()
-            .get(PET_GET_BY_STATUS_URL)
+        try {
+            return given()
+                .filter(new AllureRestAssured())
+                .queryParam("status", "available")
 
-        .then()
-            .spec(responseSpecificationForPetsList200)
-            .extract().asString();
+            .when()
+                .get(PET_GET_BY_STATUS_URL)
+
+            .then()
+                .spec(responseSpecificationForPetsList200)
+                .extract().asString();
+
+        } catch (Exception e) {
+            logger.error("Ошибка при обработке запроса GET /pet/findByStatus?status=available: ", e);
+            throw e;
+        }
 
     }
 
     @Step("Проверить в ответе наличие питомцев только со статусом available")
     public void verifyStatusAvailableFromPetsDataStep(String getPetsByStatusResponse) {
 
-        JSONArray petsResponseJSONArray = new JSONArray(getPetsByStatusResponse);
+        logger.info("Проверить в ответе наличие питомцев только со статусом available");
 
-        for(int i = 0; i < petsResponseJSONArray.length(); i++) {
-            String petStatus = petsResponseJSONArray.getJSONObject(i).get("status").toString();
-            assertThat(petStatus).isEqualTo("available");
+        try {
+            JSONArray petsResponseJSONArray = new JSONArray(getPetsByStatusResponse);
+
+            for (int i = 0; i < petsResponseJSONArray.length(); i++) {
+                String petStatus = petsResponseJSONArray.getJSONObject(i).get("status").toString();
+                assertThat(petStatus).isEqualTo("available");
+            }
+
+        } catch(AssertionError e) {
+            logger.error("Ошибка валидации статуса available у питомцев: {}", e.getMessage(), e);
+            throw e;
         }
 
     }

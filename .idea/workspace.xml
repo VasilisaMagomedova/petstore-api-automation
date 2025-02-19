@@ -5,13 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c17ece11-5bc1-4469-82a5-055cb9716e69" name="Changes" comment="Edited createPetTest, test values, edited POJO Pet class">
+      <change afterPath="$PROJECT_DIR$/src/test/resources/logback.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/tests/BaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/BaseTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/tests/PetNegativeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/PetNegativeTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/tests/PetPositiveTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/PetPositiveTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/utils/TestValues.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utils/TestValues.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/testng.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/testng.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +48,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "TestNG.PetNegativeTest.createPetWithInvalidIdTest.executor": "Run",
+    "TestNG.PetNegativeTest.createPetWithoutDataTest.executor": "Run",
     "TestNG.PetNegativeTest.deleteAbsentPetTest.executor": "Run",
     "TestNG.PetNegativeTest.executor": "Run",
     "TestNG.PetNegativeTest.getPetsByAbsentStatusTest.executor": "Run",
@@ -67,8 +69,8 @@
       <recent name="C:\Users\vasya\OneDrive\Рабочий стол\QA\AQA\petstore-api-automation\src\test\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="TestNG.PetNegativeTest.getPetsByAbsentStatusTest">
-    <configuration name="PetNegativeTest" type="TestNG" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="TestNG.PetPositiveTest.getPetsByStatusAvailableTest">
+    <configuration name="PetPositiveTest" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="petstore-api-automation" />
       <extension name="coverage">
         <pattern>
@@ -77,7 +79,7 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="tests" />
-      <option name="MAIN_CLASS_NAME" value="tests.PetNegativeTest" />
+      <option name="MAIN_CLASS_NAME" value="tests.PetPositiveTest" />
       <option name="TEST_OBJECT" value="CLASS" />
       <properties />
       <listeners />
@@ -85,7 +87,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PetNegativeTest.createPetWithInvalidIdTest" type="TestNG" temporary="true" nameIsGenerated="true">
+    <configuration name="PetPositiveTest.createPetTest" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="petstore-api-automation" />
       <extension name="coverage">
         <pattern>
@@ -94,8 +96,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="tests" />
-      <option name="MAIN_CLASS_NAME" value="tests.PetNegativeTest" />
-      <option name="METHOD_NAME" value="createPetWithInvalidIdTest" />
+      <option name="MAIN_CLASS_NAME" value="tests.PetPositiveTest" />
+      <option name="METHOD_NAME" value="createPetTest" />
       <option name="TEST_OBJECT" value="METHOD" />
       <properties />
       <listeners />
@@ -103,7 +105,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PetNegativeTest.deleteAbsentPetTest" type="TestNG" temporary="true" nameIsGenerated="true">
+    <configuration name="PetPositiveTest.deletePetTest" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="petstore-api-automation" />
       <extension name="coverage">
         <pattern>
@@ -112,8 +114,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="tests" />
-      <option name="MAIN_CLASS_NAME" value="tests.PetNegativeTest" />
-      <option name="METHOD_NAME" value="deleteAbsentPetTest" />
+      <option name="MAIN_CLASS_NAME" value="tests.PetPositiveTest" />
+      <option name="METHOD_NAME" value="deletePetTest" />
       <option name="TEST_OBJECT" value="METHOD" />
       <properties />
       <listeners />
@@ -121,7 +123,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PetNegativeTest.getPetsByAbsentStatusTest" type="TestNG" temporary="true" nameIsGenerated="true">
+    <configuration name="PetPositiveTest.getPetsByStatusAvailableTest" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="petstore-api-automation" />
       <extension name="coverage">
         <pattern>
@@ -130,8 +132,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="tests" />
-      <option name="MAIN_CLASS_NAME" value="tests.PetNegativeTest" />
-      <option name="METHOD_NAME" value="getPetsByAbsentStatusTest" />
+      <option name="MAIN_CLASS_NAME" value="tests.PetPositiveTest" />
+      <option name="METHOD_NAME" value="getPetsByStatusAvailableTest" />
       <option name="TEST_OBJECT" value="METHOD" />
       <properties />
       <listeners />
@@ -139,7 +141,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PetNegativeTest.searchPetWithoutIdTest" type="TestNG" temporary="true" nameIsGenerated="true">
+    <configuration name="PetPositiveTest.updatePetTest" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="petstore-api-automation" />
       <extension name="coverage">
         <pattern>
@@ -148,8 +150,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="tests" />
-      <option name="MAIN_CLASS_NAME" value="tests.PetNegativeTest" />
-      <option name="METHOD_NAME" value="searchPetWithoutIdTest" />
+      <option name="MAIN_CLASS_NAME" value="tests.PetPositiveTest" />
+      <option name="METHOD_NAME" value="updatePetTest" />
       <option name="TEST_OBJECT" value="METHOD" />
       <properties />
       <listeners />
@@ -159,11 +161,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="TestNG.PetNegativeTest.getPetsByAbsentStatusTest" />
-        <item itemvalue="TestNG.PetNegativeTest.deleteAbsentPetTest" />
-        <item itemvalue="TestNG.PetNegativeTest.searchPetWithoutIdTest" />
-        <item itemvalue="TestNG.PetNegativeTest" />
-        <item itemvalue="TestNG.PetNegativeTest.createPetWithInvalidIdTest" />
+        <item itemvalue="TestNG.PetPositiveTest.getPetsByStatusAvailableTest" />
+        <item itemvalue="TestNG.PetPositiveTest.deletePetTest" />
+        <item itemvalue="TestNG.PetPositiveTest.updatePetTest" />
+        <item itemvalue="TestNG.PetPositiveTest.createPetTest" />
+        <item itemvalue="TestNG.PetPositiveTest" />
       </list>
     </recent_temporary>
   </component>
